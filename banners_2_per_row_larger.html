@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>معرض البانرات</title>
+  <style>
+    :root {
+      --card-radius: 16px;
+      --gap: 22px;
+      --page-bg: #101827;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 36px 24px;
+      font-family: Tahoma, Arial, sans-serif;
+      color: #fff;
+      background: var(--page-bg);
+      overflow-x: hidden;
+      position: relative;
+      isolation: isolate;
+    }
+
+    /* خلفية متحركة بتدرجات لونية ناعمة */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: -35%;
+      z-index: -1;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(52, 152, 219, .42), transparent 28%),
+        radial-gradient(circle at 80% 25%, rgba(155, 89, 182, .38), transparent 30%),
+        radial-gradient(circle at 55% 80%, rgba(26, 188, 156, .30), transparent 32%),
+        linear-gradient(135deg, #101827, #18263c 45%, #111827);
+      background-size: 140% 140%;
+      animation: backgroundFlow 18s ease-in-out infinite alternate;
+      will-change: transform, background-position;
+    }
+
+    @keyframes backgroundFlow {
+      0%   { transform: translate3d(-2%, -1%, 0) rotate(0deg) scale(1); background-position: 0% 50%; }
+      50%  { transform: translate3d(2%, 2%, 0) rotate(2deg) scale(1.05); background-position: 100% 50%; }
+      100% { transform: translate3d(-1%, 3%, 0) rotate(-2deg) scale(1.08); background-position: 50% 100%; }
+    }
+
+    .page-title {
+      text-align: center;
+      margin: 0 0 28px;
+      font-size: clamp(1.5rem, 3vw, 2.4rem);
+      font-weight: 700;
+    }
+
+    /* بانران في الصف على الشاشات الكبيرة */
+    .banners-container {
+      width: min(1600px, 100%);
+      margin-inline: auto;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--gap);
+    }
+
+    .banner-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .25);
+      border-radius: var(--card-radius);
+      background: rgba(255, 255, 255, .08);
+      box-shadow: 0 14px 35px rgba(0, 0, 0, .28);
+      transform: translateZ(0);
+      transition: transform .35s ease, box-shadow .35s ease;
+    }
+
+    .banner-wrapper:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 42px rgba(0, 0, 0, .38);
+    }
+
+    .banner-under,
+    .banner-curtain {
+      position: absolute;
+      inset: 0;
+    }
+
+    .banner-under { z-index: 1; }
+
+    .banner-curtain {
+      z-index: 2;
+      width: 100%;
+      right: 0;
+      overflow: hidden;
+      transition: width 1.2s cubic-bezier(.25, 1, .5, 1);
+    }
+
+    .banner-wrapper img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    /* إزاحة الصورة داخل الستارة حتى لا تنضغط أثناء الحركة */
+    .banner-curtain img {
+      width: 100%;
+      max-width: none;
+    }
+
+    .banner-wrapper:hover .banner-curtain {
+      width: 0;
+    }
+
+    /* الأجهزة اللوحية: بانران في الصف */
+    @media (max-width: 900px) {
+      .banners-container { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    /* الهواتف: بانر واحد في الصف */
+    @media (max-width: 560px) {
+      body { padding: 22px 14px; }
+      .banners-container { grid-template-columns: 1fr; gap: 18px; }
+      .banner-wrapper { aspect-ratio: 4 / 3; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      body::before { animation: none; }
+      .banner-wrapper, .banner-curtain { transition: none; }
+    }
+
+.banner-wrapper,
+.banner-wrapper img {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.banner-wrapper img {
+  pointer-events: none;
+}
+
+
+/* خلفية متحركة */
+body {
+    background: linear-gradient(
+        -45deg,
+        #111827,
+        #263449,
+        #172554,
+        #374151
+    );
+    background-size: 400% 400%;
+    animation: movingBackground 12s ease infinite;
+}
+
+@keyframes movingBackground {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+  </style>
+</head>
+<body>
+  <h1 class="page-title">معرض تصاميم مغاسل التفصيل</h1>
+
+  <main class="banners-container">
+    <!-- البانر 1: الصورة الأولى تظهر افتراضياً والثانية عند تمرير المؤشر -->
+    <section class="banner-wrapper">
+      <div class="banner-under">
+        <img src="images\mod2.png" alt="التصميم الثاني للبانر الأول">
+      </div>
+      <div class="banner-curtain">
+        <img src="images\mod1.png" alt="التصميم الأول للبانر الأول">
+      </div>
+    </section>
+
+    <!-- البانر 2 -->
+    <section class="banner-wrapper">
+      <div class="banner-under">
+        <img src="images\adv.png" alt="التصميم الخلفي للبانر الثاني">
+      </div>
+      <div class="banner-curtain">
+        <img src="images\28.10.2026_18.30.46_REC.png" alt="التصميم الأمامي للبانر الثاني">
+      </div>
+    </section>
+
+    <!-- البانر 3 -->
+    <section class="banner-wrapper">
+      <div class="banner-under">
+        <img src="images\colone12.png" alt="التصميم الخلفي للبانر الثالث">
+      </div>
+      <div class="banner-curtain">
+        <img src="images\clone1.png" alt="التصميم الأمامي للبانر الثالث">
+      </div>
+    </section>
+
+    <!-- البانر 4 -->
+    <section class="banner-wrapper">
+      <div class="banner-under">
+        <img src="images\firstone2.png" alt="التصميم الخلفي للبانر الرابع">
+      </div>
+      <div class="banner-curtain">
+        <img src="images\final one.png" alt="التصميم الأمامي للبانر الرابع">
+      </div>
+    </section>
+
+    <!-- البانر 5 -->
+    <section class="banner-wrapper">
+      <div class="banner-under">
+        <img src="images\code2.png" alt="التصميم الخلفي للبانر الخامس">
+      </div>
+      <div class="banner-curtain">
+        <img src="images\code1.png" alt="التصميم الأمامي للبانر الخامس">
+      </div>
+    </section>
+
+ <!-- البانر 3 -->
+    <section class="banner-wrapper">
+      <div class="banner-under">
+        <img src="images\colone12.png" alt="التصميم الخلفي للبانر الثالث">
+      </div>
+      <div class="banner-curtain">
+        <img src="images\clone1.png" alt="التصميم الأمامي للبانر الثالث">
+      </div>
+    </section>
+
+    <!-- أضف بانرات أخرى بنسخ قسم banner-wrapper -->
+  </main>
+</body>
+</html>
