@@ -5,41 +5,114 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>معرض البانرات</title>
   <style>
+
+
+:root {
+  --gold: #b88735;
+  --gold-light: #e4c783;
+  --brown: #62451f;
+  --text: #5c4932;
+  --cream: #f6efe5;
+  --panel: rgba(255, 251, 243, .82);
+  --border: #bd8c3d;
+}
     :root {
       --card-radius: 16px;
       --gap: 22px;
       --page-bg: #101827;
     }
+    
 
-    * { box-sizing: border-box; }
+* {
+    box-sizing: border-box;
+}
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      padding: 36px 24px;
-      font-family: Tahoma, Arial, sans-serif;
-      color: #fff;
-      background: var(--page-bg);
-      overflow-x: hidden;
-      position: relative;
-      isolation: isolate;
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+}
+
+/* حافظة الشعار */
+.logo-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 15px;
+}
+
+/* الإطار الذهبي */
+.logo-frame {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: linear-gradient(
+        145deg,
+        #fffdf5,
+        #ffffff,
+        #f8f0d9
+    );
+
+    border: 4px solid #c99a32;
+    border-radius: 28px;
+
+    box-shadow:
+        0 0 0 3px #f3dfaa,
+        0 0 0 6px #a97919,
+        0 8px 25px rgba(0,0,0,0.18);
+
+    overflow: hidden;
+}
+
+/* لمعة الإطار */
+.logo-frame::before {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    border: 1px solid #e8c875;
+    border-radius: 20px;
+    pointer-events: none;
+}
+
+/* الشعار */
+.logo-frame img {
+    width: 88%;
+    height: 88%;
+    object-fit: contain;
+    position: relative;
+    z-index: 1;
+}
+
+/* للجوال */
+@media (max-width: 600px) {
+    .logo-frame {
+        width: 170px;
+        height: 170px;
+        border-radius: 22px;
     }
+}
 
-    /* خلفية متحركة بتدرجات لونية ناعمة */
-    body::before {
-      content: "";
-      position: fixed;
-      inset: -35%;
-      z-index: -1;
-      background:
-        radial-gradient(circle at 20% 30%, rgba(52, 152, 219, .42), transparent 28%),
-        radial-gradient(circle at 80% 25%, rgba(155, 89, 182, .38), transparent 30%),
-        radial-gradient(circle at 55% 80%, rgba(26, 188, 156, .30), transparent 32%),
-        linear-gradient(135deg, #101827, #18263c 45%, #111827);
-      background-size: 140% 140%;
-      animation: backgroundFlow 18s ease-in-out infinite alternate;
-      will-change: transform, background-position;
-    }
+
+{ box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  color: var(--text);
+  font-family: Tahoma, Arial, sans-serif;
+  background:
+    radial-gradient(ellipse at 15% 20%, rgba(255,255,255,.92), transparent 38%),
+    radial-gradient(ellipse at 90% 68%, rgba(213,190,151,.22), transparent 36%),
+    linear-gradient(135deg, #f5eee3, #e9ddc9 48%, #faf5ec);
+  overflow-x: hidden;
+}
+
+  
+
+   
 
     @keyframes backgroundFlow {
       0%   { transform: translate3d(-2%, -1%, 0) rotate(0deg) scale(1); background-position: 0% 50%; }
@@ -107,6 +180,9 @@
       object-fit: cover;
     }
 
+
+
+
     /* إزاحة الصورة داخل الستارة حتى لا تنضغط أثناء الحركة */
     .banner-curtain img {
       width: 100%;
@@ -146,30 +222,243 @@
 }
 
 
-/* خلفية متحركة */
+
+
+
+
+
+    /*
+      نسخة مطابقة للتصميم المرفق:
+      الصورة الأصلية تحتوي على الخلفية الرخامية والستائر الذهبية
+      والبانر والنصوص ومعرض المغاسل، لذلك نعرضها كاملة دون قصّ.
+    */
+   
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 body {
-    background: linear-gradient(
-        -45deg,
-        #111827,
-        #263449,
-        #172554,
-        #374151
-    );
-    background-size: 400% 400%;
-    animation: movingBackground 12s ease infinite;
+  margin: 0;
+  color: var(--text);
+  font-family: Tahoma, Arial, sans-serif;
+  background:
+    radial-gradient(ellipse at 15% 20%, rgba(255,255,255,.92), transparent 38%),
+    radial-gradient(ellipse at 90% 68%, rgba(213,190,151,.22), transparent 36%),
+    linear-gradient(135deg, #f5eee3, #e9ddc9 48%, #faf5ec);
+  overflow-x: hidden;
+}
+.page {
+  max-width: 1524px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 20px 7% 52px;
+  position: relative;
+  isolation: isolate;
+}
+/* ستائر ذهبية مرسومة بـ CSS بدل دمجها داخل صورة واحدة */
+.curtain {
+  position: absolute;
+  top: 0;
+  width: 31%;
+  height: 190px;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .95;
+  background: linear-gradient(100deg, #b28a4b 0%, #f5e6bd 16%, #c4a064 30%, #fff4d8 48%, #b28a4b 72%, #f7e7c0 100%);
+  filter: drop-shadow(0 8px 9px rgba(86,60,27,.18));
+}
+.curtain.left {
+  left: -5%;
+  clip-path: ellipse(85% 53% at 8% 0%);
+  transform: rotate(16deg);
+  transform-origin: top left;
+}
+.curtain.right {
+  right: -5%;
+  clip-path: ellipse(85% 53% at 92% 0%);
+  transform: rotate(-16deg);
+  transform-origin: top right;
+}
+.top-panel {
+  position: relative;
+  text-align: center;
+  padding: 16px 28px 26px;
+  border: 2px solid var(--border);
+  border-radius: 19px;
+  background:
+    linear-gradient(120deg, rgba(255,255,255,.76), rgba(249,241,227,.91)),
+    repeating-linear-gradient(145deg, transparent 0 42px, rgba(191,166,124,.08) 43px 45px);
+  box-shadow: 0 15px 28px rgba(82,58,30,.14);
 }
 
-@keyframes movingBackground {
-    0%   { background-position: 0% 50%; }
-    50%  { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+.top-panell {
+  position: relative;
+  text-align: center;
+  padding: 16px 28px 26px;
+  border: 2px solid var(--border);
+  border-radius: 19px;
+margin-top: 35px;
+ 
+  background:
+    linear-gradient(120deg, rgba(255,255,255,.76), rgba(249,241,227,.91)),
+    repeating-linear-gradient(145deg, transparent 0 42px, rgba(191,166,124,.08) 43px 45px);
+  box-shadow: 0 15px 28px rgba(82,58,30,.14);
+}
+.logo-mark {
+  font-size: 72px;
+  line-height: 1;
+  color: var(--gold);
+  font-family: Georgia, serif;
+  text-shadow: 0 2px 0 #f6dfaa;
+}
+.brand-name {
+  margin: 6px 0 2px;
+  font-size: clamp(22px, 3.2vw, 31px);
+  font-weight: 700;
+  color: #76501c;
+}
+.english-name {
+  direction: ltr;
+  letter-spacing: 7px;
+  font-size: 13px;
+  margin: 8px 0 23px;
+  color: #5b3c16;
+}
+.ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 14px auto;
+  color: var(--gold);
+}
+.ornament::before, .ornament::after {
+  content: "";
+  height: 1px;
+  width: min(22%, 170px);
+  background: var(--gold);
+}
+.diamond { transform: rotate(45deg); width: 9px; height: 9px; background: var(--gold); display: inline-block; }
+.tagline {
+  margin: 12px 0;
+  color: #9a6a27;
+  font-size: clamp(19px, 2.8vw, 27px);
+  font-weight: 700;
+}
+.intro {
+  max-width: 660px;
+  margin: 0 auto;
+  font-size: 15px;
+  line-height: 1.9;
+}
+.highlight {
+  margin: 11px 0 0;
+  font-weight: bold;
+  color: #9a671e;
+  font-size: 17px;
+}
+.cta {
+  display: inline-block;
+  margin-top: 13px;
+  padding: 8px 25px;
+  color: var(--brown);
+  text-decoration: none;
+  border-top: 1px solid #c6a66f;
+  border-bottom: 1px solid #c6a66f;
+}
+.gallery-section { padding-top: 30px; }
+.section-title {
+  text-align: center;
+  font-size: clamp(26px, 3.5vw, 34px);
+  color: #5d4528;
+  margin: 0 0 6px;
+}
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 28px;
+  margin-top: 26px;
+}
+.gallery-card {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1.72 / 1;
+  border: 1.5px solid var(--border);
+  border-radius: 11px;
+  background: #dfd0b8;
+  box-shadow: 0 5px 9px rgba(74,51,23,.2);
+}
+.gallery-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .45s ease;
+}
+.gallery-card:hover img { transform: scale(1.035); }
+.card-caption {
+  position: absolute;
+  right: 0; left: 0; bottom: 0;
+  padding: 10px 12px;
+  color: white;
+  background: linear-gradient(transparent, rgba(35,25,13,.7));
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+.gallery-card:hover .card-caption { opacity: 1; }
+footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 30px;
+  color: var(--gold);
+}
+footer::before, footer::after { content: ""; height: 1px; background: var(--gold); flex: 1; }
+footer span { width: 8px; height: 8px; background: var(--gold); transform: rotate(45deg); }
+@media (max-width: 620px) {
+  .page { padding: 18px 4% 30px; }
+  .top-panel { padding: 14px 15px 20px; border-radius: 14px; }
+  .logo-mark { font-size: 56px; }
+  .english-name { letter-spacing: 4px; }
+  .intro { font-size: 13px; }
+  .gallery-grid { gap: 12px; margin-top: 20px; }
+  .gallery-card { border-radius: 8px; aspect-ratio: 1.25 / 1; }
+  .card-caption { display: none; }
+  .curtain { height: 120px; }
 }
   </style>
+
+
 </head>
 <body>
-  <h1 class="page-title">معرض تصاميم مغاسل التفصيل</h1>
+<main class="page">
 
-  <main class="banners-container">
+    <header class="top-panel">
+    <!-- استبدل الرمز أدناه بشعارك الحقيقي إن رغبت -->
+
+    <div class="logo-wrapper">
+    <div class="logo-frame">
+    <img src="images\cologo.png">
+  </div>
+  </div>
+    <h1 class="brand-name">شركة سرايا للأدوات الصحية</h1>
+    <div class="english-name">SARAYAH COMPANY</div>
+    <div class="ornament"><span class="diamond"></span></div>
+    <h2 class="tagline">✦نحن نحول خيالك إلى واقع✦  </h2>
+    <p class="intro">
+      لأن الفخامة تبدأ من فكرتك، نصمم لك مغاسل تُفصّل حسب الطلب، تجمع بين الأناقة والإبداع والدقة في التفاصيل.<br>
+      اختر التصميم الذي تحلم به، وحدد المقاسات والألوان التي تناسب ذوقك، ودعنا نحول فكرتك إلى تحفة فنية تضيف لمسة من التميز والفخامة.
+    </p>
+    <p class="highlight">خيالك هو البداية... وإبداعنا يحوّله إلى واقع.</p>
+    <a class="cta" href="www.sarayahstore.com.sa">راسلنا الآن، وابدأ تصميم مغسلتك الخاصة. www.sarayahstore.com.sa <href="www.sarayahstore.com.sa"></href></a>
+    <a class="cta" href="sarayahalrass@gmail.com"> sarayahalrass@gmail.com <href="sarayahalrass@gmail.com"> </href></a>
+    <a class="cta" >0551195771 - 0537966634</a>
+     </header>
+
+  <h1 class="page-title">معرض تصاميم مغاسل التفصيل</h1>
+   <div class="ornament"><span class="diamond"></span></div>
+   <main class="banners-container">
+ <article class="gallery-card">
+  
     <!-- البانر 1: الصورة الأولى تظهر افتراضياً والثانية عند تمرير المؤشر -->
     <section class="banner-wrapper">
       <div class="banner-under">
@@ -177,10 +466,15 @@ body {
       </div>
       <div class="banner-curtain">
         <img src="images\mod1.png" alt="التصميم الأول للبانر الأول">
+
       </div>
     </section>
-
+   
+    </article>
+ 
     <!-- البانر 2 -->
+   
+ <article class="gallery-card">
     <section class="banner-wrapper">
       <div class="banner-under">
         <img src="images\adv.png" alt="التصميم الخلفي للبانر الثاني">
@@ -189,6 +483,8 @@ body {
         <img src="images\28.10.2026_18.30.46_REC.png" alt="التصميم الأمامي للبانر الثاني">
       </div>
     </section>
+     </article>
+ 
 
     <!-- البانر 3 -->
     <section class="banner-wrapper">
@@ -230,7 +526,16 @@ body {
       </div>
     </section>
 
-    <!-- أضف بانرات أخرى بنسخ قسم banner-wrapper -->
+    
   </main>
 </body>
-</html>
+<!-- أضف بانرات أخرى بنسخ قسم banner-wrapper -->
+
+ <header class="top-panell">     
+      
+       <p class="highlight">خيالك هو البداية... وإبداعنا يحوّله إلى واقع.</p>
+    <a class="cta" href="www.sarayahstore.com.sa">راسلنا الآن، وابدأ تصميم مغسلتك الخاصة. www.sarayahstore.com.sa <href="www.sarayahstore.com.sa"></href></a>
+    <a class="cta" href="sarayahalrass@gmail.com"> sarayahalrass@gmail.com <href="sarayahalrass@gmail.com"> </href></a>
+    <a class="cta" >0551195771 - 0537966634</a></header>
+
+    </html>
